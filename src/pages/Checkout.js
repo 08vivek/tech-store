@@ -3,13 +3,9 @@ import { CartContext } from "../context/cart";
 import { UserContext } from "../context/user";
 import { useHistory } from "react-router-dom";
 import EmptyCart from "../components/Cart/EmptyCart";
-import {
-  CardElement,
-  StripeProvider,
-  Elements,
-  injectStripe
-} from "react-stripe-elements";
-import submitOrder from "../strapi/submitOrder";
+//import {CardElement,StripeProvider,Elements,injectStripe} from "react-stripe-elements";
+//import submitOrder from "../strapi/submitOrder";
+import axios from 'axios';
 
 function Checkout(props) {
   const { cart, total, clearCart } = React.useContext(CartContext);
@@ -19,11 +15,27 @@ function Checkout(props) {
   const [name, setName] = React.useState("");
   const [error, setError] = React.useState("");
   const isEmpty = !name || alert.show;
-  async function handleSubmit(e) {
-    showAlert({ msg: "submitting order... please wait" });
+
+
+  const handleSubmit = async  e => {
+    
     e.preventDefault();
-    const response = await props.stripe
-      .createToken()
+    showAlert({ msg: "submitting order... please wait" });
+    
+    const response = await axios.post(`http://localhost:5000/orders/orders_to_proceed`, {user,cart,total})
+                    .catch(error => console.log(error));
+    if(response.data.success){
+      showAlert({ msg: "your order is complete" });
+        clearCart();
+        window.location='/products';
+        return;
+    }else{
+      showAlert({
+        msg: "there was an error with your order. please try again!",
+        type: "danger"
+      });
+    }
+    /*const response = await props.stripe.createToken()
       .catch(error => console.log(error));
 
     const { token } = response;
@@ -53,7 +65,7 @@ function Checkout(props) {
     } else {
       hideAlert();
       setError(response.error.message);
-    }
+    }*/
   }
   if (cart.length < 1) return <EmptyCart />;
   return (
@@ -89,7 +101,7 @@ function Checkout(props) {
         </div>
         {/* end of card element */}
         {/* STRIPE ELEMENTS */}
-        <CardElement className="card-element"></CardElement>
+        {/*}<CardElement className="card-element"></CardElement>
         {/* stripe errors */}
         {error && <p className="form-empty">{error}</p>}
         {/* empty value */}
@@ -108,11 +120,11 @@ function Checkout(props) {
     </section>
   );
 }
-const CardForm = injectStripe(Checkout);
+/*const CardForm = injectStripe(Checkout);
 
 const StripeWrapper = () => {
   return (
-    <StripeProvider apiKey="pk_test_RmWPHoQAmlEf6RiOlsMRkEeJ00XzgNQe2k">
+    <StripeProvider apiKey="pk_test_I6VqxHEW6VMSEBgelplX3V7c00c3uG0KHf">
       <Elements>
         <CardForm></CardForm>
       </Elements>
@@ -121,3 +133,5 @@ const StripeWrapper = () => {
 };
 
 export default StripeWrapper;
+*/
+export default Checkout;

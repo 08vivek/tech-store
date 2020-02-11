@@ -1,5 +1,4 @@
 import React from "react";
-
 // react router dom
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // pages
@@ -16,12 +15,13 @@ import Header from "./components/Header";
 import Alert from "./components/Alert";
 import PrivateRoute from "./components/PrivateRoute";
 import ScrollButton from "./components/ScrollButton";
+
 export default function App() {
   return (
     <Router>
-      <Header />
+	  <Header />
       <Alert />
-      <ScrollButton />
+      <ScrollButton/>
       <Switch>
         <Route exact path="/">
           <Home />
@@ -32,21 +32,17 @@ export default function App() {
         <Route path="/cart">
           <Cart />
         </Route>
-        <PrivateRoute path="/checkout" name="john" msg="hello">
-          <Checkout />
-        </PrivateRoute>
-        <Route path="/login">
+		    <Route path="/login">
           <Login />
         </Route>
+		    <PrivateRoute path="/checkout">
+          <Checkout />
+        </PrivateRoute>
         <Route exact path="/products">
           <Products />
         </Route>
-        <Route
-          path="/products/:id"
-          children={<ProductDetails></ProductDetails>}
-        ></Route>
-
-        <Route path="*">
+		<Route path="/products/:id" children={<ProductDetails></ProductDetails>}></Route>
+		<Route path="*">
           <Error />
         </Route>
       </Switch>

@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { ProductContext } from "../../context/products";
+
 export default function Filters() {
-  const {
-    filters: { search, category, shipping, price },
-    updateFilters,
-    sorted
-  } = useContext(ProductContext);
+  
+    const {filters: { search, category, shipping, price },updateFilters,sorted} = useContext(ProductContext);
+  
   return (
     <section className="filters-section">
       <h2 className="section-title">search products</h2>

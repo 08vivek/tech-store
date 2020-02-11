@@ -4,6 +4,7 @@ import logo from "../assets/logo.svg";
 import CartLink from "./Cart/CartLink";
 import { UserContext } from "../context/user";
 import LoginLink from "../components/LoginLink";
+
 export default function Header() {
   const { user } = React.useContext(UserContext);
   return (

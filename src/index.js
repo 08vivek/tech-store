@@ -6,14 +6,4 @@ import ProductProvider from "./context/products";
 import { CartProvider } from "./context/cart";
 import { UserProvider } from "./context/user";
 
-ReactDOM.render(
-  <UserProvider>
-    <ProductProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </ProductProvider>
-  </UserProvider>,
-
-  document.getElementById("root")
-);
+ReactDOM.render(<UserProvider><ProductProvider><CartProvider><App /></CartProvider></ProductProvider></UserProvider>, document.getElementById("root"));

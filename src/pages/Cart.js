@@ -4,11 +4,11 @@ import { UserContext } from "../context/user";
 import EmptyCart from "../components/Cart/EmptyCart";
 import CartItem from "../components/Cart/CartItem";
 import { Link } from "react-router-dom";
-// import {UserContext} from '../context/user'
 
 export default function Cart() {
-  const { cart, total } = React.useContext(CartContext);
+  
   const { user } = React.useContext(UserContext);
+  const { cart, total } = React.useContext(CartContext);
 
   if (cart.length === 0) {
     return <EmptyCart />;
